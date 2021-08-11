@@ -1,1 +1,2 @@
-.DS_Store
+find . -type d | grep .idea
+find . | grep .DS_
