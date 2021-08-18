@@ -6,15 +6,19 @@ import java.awt.image.BufferedImage;
 public class ASCII_convert {
     private final char black;
     private final char white;
-    public ASCII_convert(char dark, char white) {
-        this.black = dark;
+
+    public ASCII_convert(char black, char white) {
+        this.black = black;
         this.white = white;
     }
 
-    public String convert(final BufferedImage image) {
+    public String convert (final BufferedImage image) {
         StringBuilder sb = new StringBuilder((image.getWidth() + 1) * image.getHeight());
+
         for (int y = 0; y < image.getHeight(); y++) {
-            if (sb.length() != 0) sb.append("\n");
+            if (sb.length() != 0) {
+                sb.append("\n");
+            }
             for (int x = 0; x < image.getWidth(); x++) {
                 Color pixelColor = new Color(image.getRGB(x, y));
                 double gValue = (double) pixelColor.getRed() * 0.2989 + (double) pixelColor.getBlue() * 0.5870 + (double) pixelColor.getGreen() * 0.1140;
@@ -22,11 +26,11 @@ public class ASCII_convert {
                 sb.append(s);
             }
         }
+
         return sb.toString();
     }
 
-    private char returnStrPos(double g)
-    {
+    private char returnStrPos(double g) {
         final char str;
 
         if (g >= 230.0) {
@@ -34,7 +38,8 @@ public class ASCII_convert {
         } else {
             str = white;
         }
-        return str;
 
+        return str;
     }
+
 }
