@@ -7,12 +7,11 @@ To build the app you have to install Maven. Then run `mvn package` in the root o
 
 After compiling, you can run the app using the command:
 
-`java -cp target/ImagesToChar-1.0-SNAPSHOT.jar edu.school21.printer.app.Main src/main/resources/it.bmp 0 .`
+` java -jar target/ImagesToChar-1.0-SNAPSHOT.jar  src/main/resources/it.bmp 0 .`
 
 Details:
 
-- `-cp target/ImagesToChar-1.0-SNAPSHOT.jar` - path to compiled library
-- `edu.school21.printer.app.Main` - main class
+- `-jar target/ImagesToChar-1.0-SNAPSHOT.jar` - executable JAR file
 - `src/main/resources/it.bmp` - image to convert
 - `0` - symbol for white colour
 - `.` - symbol for black colour
