@@ -31,7 +31,7 @@ public class NumberWorker {
 		return result;
 	}
 
-	static class IllegalNumberException extends Throwable {
+	static class IllegalNumberException extends RuntimeException {
 		public IllegalNumberException(String message) {
 			super("IllegalNumberException: " + message);
 		}
