@@ -1,33 +1,65 @@
 package edu.school21.chat.models;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Chatroom {
-	private Long			id;
-	private String			name;
-	private Long			ownerID;
-	private List<Message>	messages;
+	private Long id;
+	private String name;
+	private User owner;
+	private List<Message> messages;
+
+/*
+	public Chatroom(String name, User owner) {
+		this.name = name;
+		this.owner = owner;
+		messages = new LinkedList<>();
+	}
+*/
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+
+	public List<Message> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
+	}
 
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof Chatroom)) return false;
-
 		Chatroom chatroom = (Chatroom) o;
-
-		if (!id.equals(chatroom.id)) return false;
-		if (!name.equals(chatroom.name)) return false;
-		if (!ownerID.equals(chatroom.ownerID)) return false;
-		return messages.equals(chatroom.messages);
+		return id.equals(chatroom.id) && Objects.equals(name, chatroom.name) && Objects.equals(owner, chatroom.owner) && Objects.equals(messages, chatroom.messages);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = id.hashCode();
-		result = 31 * result + name.hashCode();
-		result = 31 * result + ownerID.hashCode();
-		result = 31 * result + messages.hashCode();
-		return result;
+		return Objects.hash(id, name, owner, messages);
 	}
 
 	@Override
@@ -35,7 +67,7 @@ public class Chatroom {
 		return "Chatroom{" +
 				"id=" + id +
 				", name='" + name + '\'' +
-				", ownerID=" + ownerID +
+				", owner=" + owner +
 				", messages=" + messages +
 				'}';
 	}

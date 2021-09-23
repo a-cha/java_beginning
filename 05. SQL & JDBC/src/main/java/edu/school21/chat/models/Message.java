@@ -1,61 +1,79 @@
 package edu.school21.chat.models;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
+import java.util.Objects;
 
 public class Message {
-	private Long			id;
-	private Long			authorID;
-	private Long			chatroomID;
-	private String			messageText;
-	private LocalDateTime	dateTime;
+	private Long id;
+	private User author;
+	private Chatroom room;
+	private String text;
+	private Timestamp dateTime;
+
+	public Long getId() {
+		return id;
+	}
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public void setAuthorID(Long authorID) {
-		this.authorID = authorID;
+	public User getAuthor() {
+		return author;
 	}
 
-	public void setChatroomID(Long chatroomID) {
-		this.chatroomID = chatroomID;
+	public void setAuthor(User author) {
+		this.author = author;
 	}
 
-	public void setMessageText(String messageText) {
-		this.messageText = messageText;
+	public Chatroom getRoom() {
+		return room;
+	}
+
+	public void setRoom(Chatroom room) {
+		this.room = room;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public Timestamp getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(Timestamp dateTime) {
+		this.dateTime = dateTime;
 	}
 
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof Message)) return false;
-
 		Message message = (Message) o;
-
-		if (!id.equals(message.id)) return false;
-		if (!authorID.equals(message.authorID)) return false;
-		if (!chatroomID.equals(message.chatroomID)) return false;
-		if (!messageText.equals(message.messageText)) return false;
-		return dateTime.equals(message.dateTime);
+		return Objects.equals(id, message.id)
+				&& Objects.equals(author, message.author)
+				&& Objects.equals(room, message.room)
+				&& Objects.equals(text, message.text)
+				&& Objects.equals(dateTime, message.dateTime);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = id.hashCode();
-		result = 31 * result + authorID.hashCode();
-		result = 31 * result + chatroomID.hashCode();
-		result = 31 * result + messageText.hashCode();
-		result = 31 * result + dateTime.hashCode();
-		return result;
+		return Objects.hash(id, author, room, text, dateTime);
 	}
 
 	@Override
 	public String toString() {
 		return "Message{" +
 				"id=" + id +
-				", authorID=" + authorID +
-				", chatroomID=" + chatroomID +
-				", messageText='" + messageText + '\'' +
+				", author=" + author +
+				", room=" + room +
+				", messageText='" + text + '\'' +
 				", dateTime=" + dateTime +
 				'}';
 	}
