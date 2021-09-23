@@ -3,30 +3,59 @@ package edu.school21.chat.models;
 import java.util.List;
 
 public class User {
-	private Long			id;
-	private String			login;
-	private String			password;
-	private List<Chatroom>	createdRooms;
-	private List<Chatroom>	memberRooms;
+	private Long id;
+	private String login;
+	private String password;
+	private List<Chatroom> createdRooms;
+	private List<Chatroom> memberRooms;
 
-//	public User(Long id, String login, String password, List<Chatroom> createdRooms, List<Chatroom> memberRooms) {
-//		this.id = id;
-//		this.login = login;
-//		this.password = password;
-//		this.createdRooms = createdRooms;
-//		this.memberRooms = memberRooms;
-//	}
+/*
+	public User(String login, String password) {
+		this.login = login;
+		this.password = password;
+		createdRooms = new LinkedList<>();
+		memberRooms = new LinkedList<>();
+	}
+*/
+
+	public Long getId() {
+		return id;
+	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getLogin() {
+		return login;
 	}
 
 	public void setLogin(String login) {
 		this.login = login;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public List<Chatroom> getCreatedRooms() {
+		return createdRooms;
+	}
+
+	public void setCreatedRooms(List<Chatroom> createdRooms) {
+		this.createdRooms = createdRooms;
+	}
+
+	public List<Chatroom> getMemberRooms() {
+		return memberRooms;
+	}
+
+	public void setMemberRooms(List<Chatroom> memberRooms) {
+		this.memberRooms = memberRooms;
 	}
 
 	@Override
