@@ -2,7 +2,7 @@ package edu.school21.chat.app;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import edu.school21.chat.repositories.implementations.ChatroomsRepositoryJdbcImpl;
+import edu.school21.chat.repositories.implementations.MessagesRepositoryJdbcImpl;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class Program {
 //        createDatabase();
 
         System.out.println("Enter a message ID");
-        new ChatroomsRepositoryJdbcImpl(ds)
+        new MessagesRepositoryJdbcImpl(ds)
                 .findById(new Scanner(System.in).nextLong())
                 .ifPresent(System.out::println);
 
