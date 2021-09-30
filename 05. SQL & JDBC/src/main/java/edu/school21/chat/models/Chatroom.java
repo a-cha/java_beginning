@@ -9,13 +9,19 @@ public class Chatroom {
 	private User owner;
 	private List<Message> messages;
 
-/*
-	public Chatroom(String name, User owner) {
+	public Chatroom() {
+	}
+
+	public Chatroom(Long id,
+					String name,
+					User owner,
+					List<Message> messages
+	) {
+		this.id = id;
 		this.name = name;
 		this.owner = owner;
-		messages = new LinkedList<>();
+		this.messages = messages;
 	}
-*/
 
 	public Long getId() {
 		return id;

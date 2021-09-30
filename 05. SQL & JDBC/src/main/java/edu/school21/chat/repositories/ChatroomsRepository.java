@@ -6,6 +6,4 @@ import java.util.Optional;
 
 public interface ChatroomsRepository {
 	Optional<Chatroom> findById(Long id);
-
-	void save(Chatroom message);
 }

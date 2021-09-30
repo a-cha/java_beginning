@@ -10,6 +10,22 @@ public class Message {
 	private String text;
 	private Timestamp dateTime;
 
+	public Message() {
+	}
+
+	public Message(Long id,
+				   User author,
+				   Chatroom room,
+				   String text,
+				   Timestamp dateTime
+	) {
+		this.id = id;
+		this.author = author;
+		this.room = room;
+		this.text = text;
+		this.dateTime = dateTime;
+	}
+
 	public Long getId() {
 		return id;
 	}

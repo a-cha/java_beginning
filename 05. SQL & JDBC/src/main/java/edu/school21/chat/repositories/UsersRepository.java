@@ -6,6 +6,4 @@ import java.util.Optional;
 
 public interface UsersRepository {
 	Optional<User> findById(Long id);
-
-	void save(User message);
 }

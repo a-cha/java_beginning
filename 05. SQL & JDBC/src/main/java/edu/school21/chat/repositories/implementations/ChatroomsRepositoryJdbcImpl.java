@@ -1,7 +1,6 @@
 package edu.school21.chat.repositories.implementations;
 
 import edu.school21.chat.models.Chatroom;
-import edu.school21.chat.models.User;
 import edu.school21.chat.repositories.ChatroomsRepository;
 
 import javax.sql.DataSource;
@@ -19,7 +18,6 @@ public class ChatroomsRepositoryJdbcImpl implements ChatroomsRepository {
 	@Override
 	public Optional<Chatroom> findById(Long id) {
 		Chatroom chatroom = new Chatroom();
-		User user = new User();
 
 		try {
 			ResultSet res = ds.getConnection().createStatement().
@@ -40,8 +38,4 @@ public class ChatroomsRepositoryJdbcImpl implements ChatroomsRepository {
 		return Optional.of(chatroom);
 	}
 
-	@Override
-	public void save(Chatroom message) {
-		//		todo implement here
-	}
 }
