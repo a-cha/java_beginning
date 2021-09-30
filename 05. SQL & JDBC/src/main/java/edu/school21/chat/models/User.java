@@ -9,14 +9,21 @@ public class User {
 	private List<Chatroom> createdRooms;
 	private List<Chatroom> memberRooms;
 
-/*
-	public User(String login, String password) {
+	public User() {
+	}
+
+	public User(Long id,
+				String login,
+				String password,
+				List<Chatroom> createdRooms,
+				List<Chatroom> memberRooms
+	) {
+		this.id = id;
 		this.login = login;
 		this.password = password;
-		createdRooms = new LinkedList<>();
-		memberRooms = new LinkedList<>();
+		this.createdRooms = createdRooms;
+		this.memberRooms = memberRooms;
 	}
-*/
 
 	public Long getId() {
 		return id;

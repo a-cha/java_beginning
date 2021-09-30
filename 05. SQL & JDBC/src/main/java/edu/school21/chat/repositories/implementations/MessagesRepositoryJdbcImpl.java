@@ -23,7 +23,8 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository {
 		try {
 			ResultSet res = ds.getConnection().createStatement().
 					executeQuery("select * from messages where id = " + id);
-			res.next();
+			if (!res.next())
+				return Optional.empty();
 
 			message.setId(res.getLong("id"));
 			message.setAuthor(new UsersRepositoryJdbcImpl(ds).findById(
@@ -43,6 +44,58 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository {
 
 	@Override
 	public void save(Message message) {
-//		todo implement here
+		if (!new ChatroomsRepositoryJdbcImpl(ds).findById(message.getRoom().getId()).isPresent() ||
+				!new UsersRepositoryJdbcImpl(ds).findById(message.getAuthor().getId()).isPresent()) {
+			throw new NotSavedSubEntityException();
+		}
+
+		try {
+			ResultSet sequence = ds.getConnection()
+					.createStatement()
+					.executeQuery("select nextval('public.messages_id_seq');");
+//					.executeQuery("select setval('public.messages_id_seq', 5);");
+			sequence.next();
+			long id = sequence.getLong(1);
+
+			ds.getConnection().createStatement().executeUpdate(
+					"insert into public.messages (id, author, chatroom, text, datetime) " +
+							"overriding system value values (" +
+							id + ", " +
+							message.getAuthor().getId() + ", " +
+							message.getRoom().getId() + ", " +
+							"'" + message.getText() + "'" + ", " +
+							"'" + message.getDateTime() + "'" +
+							");"
+			);
+			message.setId(id);
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public void update(Message message) {
+		if (!new ChatroomsRepositoryJdbcImpl(ds).findById(message.getRoom().getId()).isPresent() ||
+				!new UsersRepositoryJdbcImpl(ds).findById(message.getAuthor().getId()).isPresent()) {
+			throw new NotSavedSubEntityException();
+		}
+
+		try {
+			ds.getConnection().createStatement().executeUpdate(
+					"update public.messages " +
+							"set author = " + message.getAuthor().getId() + ", " +
+							"chatroom = " + message.getRoom().getId() + ", " +
+							"text = " + (message.getText().isEmpty() ? null : "'" + message.getText() + "'") + ", " +
+							"datetime = " + (message.getDateTime() == null ? null : "'" + message.getDateTime() + "'") + " " +
+							"where id = " + message.getId() + ";"
+			);
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+
+	}
+
+	private static class NotSavedSubEntityException extends RuntimeException {
 	}
 }

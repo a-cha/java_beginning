@@ -22,7 +22,8 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
 		try {
 			ResultSet res = ds.getConnection().createStatement().
 					executeQuery("select * from users where id = " + id);
-			res.next();
+			if (!res.next())
+				return Optional.empty();
 
 			user.setId(res.getLong("id"));
 			user.setLogin(res.getString("login"));
@@ -36,8 +37,4 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
 		return Optional.of(user);
 	}
 
-	@Override
-	public void save(User message) {
-		//		todo implement here
-	}
 }
