@@ -1,7 +1,9 @@
 package school21.spring.service.application;
 
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import school21.spring.service.config.ApplicationConfig;
 import school21.spring.service.models.User;
 import school21.spring.service.repositories.UsersRepository;
 import school21.spring.service.repositories.UsersRepositoryJdbcTemplateImpl;
@@ -9,9 +11,10 @@ import school21.spring.service.repositories.UsersRepositoryJdbcTemplateImpl;
 public class Main {
 
 	public static void main(String[] args) {
-		ApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
+		ApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class);
 		UsersRepository repository;
 
+		HikariDataSource ds = context.getBean("hikariDS", HikariDataSource.class);
 //		repository = context.getBean("usersRepositoryJdbc_Hikari", UsersRepositoryJdbcImpl.class);
 //		repository = context.getBean("usersRepositoryJdbc_DriverManager", UsersRepositoryJdbcImpl.class);
 //		repository = context.getBean("usersRepositoryJdbcTemplate_Hikari", UsersRepositoryJdbcTemplateImpl.class);

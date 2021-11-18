@@ -1,5 +1,8 @@
 package school21.spring.service.repositories;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import school21.spring.service.models.User;
 
 import javax.sql.DataSource;
@@ -9,12 +12,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class UsersRepositoryJdbcImpl implements UsersRepository {
-	private final DataSource ds;
-
-	public UsersRepositoryJdbcImpl(DataSource ds) {
-		this.ds = ds;
-	}
+	@Autowired
+	@Qualifier("hikariDS")
+	private DataSource ds;
 
 	@Override
 	public User findById(Long id) {
@@ -28,6 +30,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
 
 			user.setId(res.getLong("id"));
 			user.setEmail(res.getString("login"));
+			user.setPassword(res.getString("password"));
 		} catch (SQLException throwable) {
 			throwable.printStackTrace();
 		}
@@ -47,6 +50,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
 				User user = new User();
 				user.setId(res.getLong("id"));
 				user.setEmail(res.getString("login"));
+				user.setPassword(res.getString("password"));
 				userList.add(user);
 			}
 		} catch (SQLException throwable) {
@@ -62,8 +66,8 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
 			ds.getConnection().createStatement().executeUpdate(
 					"insert into public.users (login, password) " +
 							"values ('" +
-							entity.getEmail() + "', " +
-							"''" +
+							entity.getEmail() + "', '" +
+							entity.getPassword() + "'" +
 							");"
 			);
 		} catch (SQLException throwable) {
@@ -77,7 +81,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
 			ds.getConnection().createStatement().executeUpdate(
 					"update public.users " +
 							"set login = '" + entity.getEmail() + "', " +
-							"password = ''" +
+							"password = '" + entity.getPassword() + "'" +
 							"where id = " + entity.getId() + ";"
 			);
 		} catch (SQLException throwable) {

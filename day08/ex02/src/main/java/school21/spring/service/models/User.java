@@ -5,6 +5,7 @@ import java.util.Objects;
 public class User {
 	Long	id;
 	String	email;
+	String	password;
 
 	public long getId() {
 		return id;
@@ -22,11 +23,20 @@ public class User {
 		this.email = email;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	@Override
 	public String toString() {
 		return "User{" +
 				"id=" + id +
-				", eMail='" + email + '\'' +
+				", email='" + email + '\'' +
+				", password='" + password + '\'' +
 				'}';
 	}
 
@@ -35,11 +45,11 @@ public class User {
 		if (this == o) return true;
 		if (!(o instanceof User)) return false;
 		User user = (User) o;
-		return getId() == user.getId() && Objects.equals(getEmail(), user.getEmail());
+		return getId() == user.getId() && getEmail().equals(user.getEmail()) && getPassword().equals(user.getPassword());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getId(), getEmail());
+		return Objects.hash(getId(), getEmail(), getPassword());
 	}
 }

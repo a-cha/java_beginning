@@ -1,7 +1,10 @@
 package school21.spring.service.repositories;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.stereotype.Component;
 import school21.spring.service.models.User;
 
 import javax.sql.DataSource;
@@ -10,12 +13,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
-	private final DataSource ds;
-
-	public UsersRepositoryJdbcTemplateImpl(DataSource ds) {
-		this.ds = ds;
-	}
+	@Autowired
+	@Qualifier("driverManagerDS")
+	private DataSource ds;
 
 	@Override
 	public User findById(Long id) {
@@ -26,6 +28,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
 			User user = new User();
 			user.setId(rs.getLong("id"));
 			user.setEmail(rs.getString("login"));
+			user.setPassword(rs.getString("password"));
 
 			return user;
 		};
@@ -47,6 +50,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
 						User user = new User();
 						user.setId(rs.getLong("id"));
 						user.setEmail(rs.getString("login"));
+						user.setPassword(rs.getString("password"));
 						userList.add(user);
 					}
 
@@ -58,7 +62,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
 	public void save(User entity) {
 		new JdbcTemplate(ds).update(
 				"insert into public.users (login, password) values (?, ?)",
-				new Object[]{entity.getEmail(), "empty"},
+				new Object[]{entity.getEmail(), entity.getPassword()},
 				new int[]{Types.VARCHAR, Types.VARCHAR});
 	}
 
@@ -66,7 +70,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
 	public void update(User entity) {
 		new JdbcTemplate(ds).update(
 				"update public.users set login = ?, password = ? where id = ?",
-				new Object[]{entity.getEmail(), "empty", entity.getId()},
+				new Object[]{entity.getEmail(), entity.getPassword(), entity.getId()},
 				new int[]{Types.VARCHAR, Types.VARCHAR, Types.BIGINT});
 	}
 
@@ -88,6 +92,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
 
 			user.setId(rs.getLong("id"));
 			user.setEmail(rs.getString("login"));
+			user.setPassword(rs.getString("password"));
 
 			return Optional.of(user);
 		};
