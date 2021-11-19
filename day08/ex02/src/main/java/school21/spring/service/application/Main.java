@@ -19,16 +19,12 @@ public class Main {
 				UsersServiceImpl.class);
 		UsersRepository repository;
 
-		repository = context.getBean("UsersRepositoryJdbcTemplateImpl", UsersRepositoryJdbcTemplateImpl.class);
-//		repository = context.getBean("UsersRepositoryJdbcImpl", UsersRepositoryJdbcImpl.class);
+//		repository = context.getBean("UsersRepositoryJdbcTemplateImpl", UsersRepositoryJdbcTemplateImpl.class);
+		repository = context.getBean("UsersRepositoryJdbcImpl", UsersRepositoryJdbcImpl.class);
 
-/*
-		UsersService service = context.getBean(UsersServiceImpl.class);
-		service.signUp("lol");
-*/
 //		test
 		User u = null;
-		long id = 21L;
+		long id = 23L;
 
 		System.err.println("findById");
 		try {

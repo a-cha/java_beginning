@@ -7,13 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import school21.spring.service.config.TestApplicationConfig;
+import school21.spring.service.models.User;
 import school21.spring.service.repositories.UsersRepository;
 import school21.spring.service.repositories.UsersRepositoryJdbcImpl;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,6 +32,7 @@ public class UsersServiceImplTest {
 	@Autowired
 	private DataSource ds;
 	private static final String EMAIL = "test@email.com";
+	private static final Logger LOG = Logger.getLogger("");
 
 	@Before
 	public void initDB() throws SQLException {
@@ -44,11 +47,18 @@ public class UsersServiceImplTest {
 	@Test
 	public void checkPassword() {
 		String password = service.signUp(EMAIL);
-		assertEquals("changed", password);
+
+		LOG.log(Level.INFO, "Generated password: \n" + password);
+
+		assertNotNull(password);
 	}
 
 	@Test
 	public void addRecordToDB() {
-		assertNotNull(repository.findByEmail(EMAIL).orElse(null));
+		User user = repository.findByEmail(EMAIL).orElse(null);
+
+		LOG.log(Level.INFO, "New record in users table: \n" + user);
+
+		assertNotNull(user);
 	}
 }

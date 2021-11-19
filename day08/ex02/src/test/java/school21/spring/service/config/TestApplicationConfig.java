@@ -11,8 +11,7 @@ public class TestApplicationConfig {
 	HikariDataSource hikariDS() {
 		HikariConfig config = new HikariConfig();
 
-//todo add in-memory setting
-		config.setJdbcUrl("jdbc:h2:~/test");
+		config.setJdbcUrl("jdbc:h2:mem:test");
 		config.setUsername("sa");
 		config.setPassword("");
 		config.setDriverClassName("org.h2.Driver");

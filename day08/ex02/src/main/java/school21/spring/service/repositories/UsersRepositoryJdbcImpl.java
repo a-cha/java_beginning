@@ -111,6 +111,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
 
 			user.setId(res.getLong("id"));
 			user.setEmail(res.getString("login"));
+			user.setPassword(res.getString("password"));
 		} catch (SQLException throwable) {
 			throwable.printStackTrace();
 		}

@@ -1,5 +1,6 @@
 package school21.spring.service.services;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -17,8 +18,7 @@ public class UsersServiceImpl implements UsersService {
 		User user = new User();
 
 		user.setEmail(email);
-//		todo generate random password
-		user.setPassword("changed");
+		user.setPassword(RandomStringUtils.random(10, true, true));
 
 		repository.save(user);
 
