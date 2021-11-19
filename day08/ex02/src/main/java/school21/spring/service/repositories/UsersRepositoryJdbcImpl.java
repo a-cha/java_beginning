@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Component(value = "UsersRepositoryJdbcImpl")
 public class UsersRepositoryJdbcImpl implements UsersRepository {
 	@Autowired
 	@Qualifier("hikariDS")

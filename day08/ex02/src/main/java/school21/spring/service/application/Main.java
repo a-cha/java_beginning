@@ -1,28 +1,25 @@
 package school21.spring.service.application;
 
-import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import school21.spring.service.config.ApplicationConfig;
 import school21.spring.service.models.User;
 import school21.spring.service.repositories.UsersRepository;
+import school21.spring.service.repositories.UsersRepositoryJdbcImpl;
 import school21.spring.service.repositories.UsersRepositoryJdbcTemplateImpl;
 
 public class Main {
 
 	public static void main(String[] args) {
-		ApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class);
+		ApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class, UsersRepositoryJdbcImpl.class, UsersRepositoryJdbcTemplateImpl.class);
 		UsersRepository repository;
 
-		HikariDataSource ds = context.getBean("hikariDS", HikariDataSource.class);
-//		repository = context.getBean("usersRepositoryJdbc_Hikari", UsersRepositoryJdbcImpl.class);
-//		repository = context.getBean("usersRepositoryJdbc_DriverManager", UsersRepositoryJdbcImpl.class);
-//		repository = context.getBean("usersRepositoryJdbcTemplate_Hikari", UsersRepositoryJdbcTemplateImpl.class);
-		repository = context.getBean("usersRepositoryJdbcTemplate_DriverManager", UsersRepositoryJdbcTemplateImpl.class);
+		repository = context.getBean("UsersRepositoryJdbcTemplateImpl", UsersRepositoryJdbcTemplateImpl.class);
+//		repository = context.getBean("UsersRepositoryJdbcImpl", UsersRepositoryJdbcImpl.class);
 
 //		test
 		User u = null;
-		long id = 17L;
+		long id = 20L;
 
 		System.err.println("findById");
 		try {
@@ -58,6 +55,7 @@ public class Main {
 		System.out.println("save");
 		u = new User();
 		u.setEmail("email");
+		u.setPassword("password");
 		repository.save(u);
 		System.err.println("findAll");
 		System.out.println(repository.findAll());
