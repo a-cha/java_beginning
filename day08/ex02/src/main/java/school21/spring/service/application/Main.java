@@ -7,19 +7,28 @@ import school21.spring.service.models.User;
 import school21.spring.service.repositories.UsersRepository;
 import school21.spring.service.repositories.UsersRepositoryJdbcImpl;
 import school21.spring.service.repositories.UsersRepositoryJdbcTemplateImpl;
+import school21.spring.service.services.UsersServiceImpl;
 
 public class Main {
 
 	public static void main(String[] args) {
-		ApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class, UsersRepositoryJdbcImpl.class, UsersRepositoryJdbcTemplateImpl.class);
+		ApplicationContext context = new AnnotationConfigApplicationContext(
+				ApplicationConfig.class,
+				UsersRepositoryJdbcImpl.class,
+				UsersRepositoryJdbcTemplateImpl.class,
+				UsersServiceImpl.class);
 		UsersRepository repository;
 
 		repository = context.getBean("UsersRepositoryJdbcTemplateImpl", UsersRepositoryJdbcTemplateImpl.class);
 //		repository = context.getBean("UsersRepositoryJdbcImpl", UsersRepositoryJdbcImpl.class);
 
+/*
+		UsersService service = context.getBean(UsersServiceImpl.class);
+		service.signUp("lol");
+*/
 //		test
 		User u = null;
-		long id = 20L;
+		long id = 21L;
 
 		System.err.println("findById");
 		try {
