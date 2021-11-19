@@ -26,7 +26,7 @@ import static org.junit.Assert.assertNotNull;
 })
 public class UsersServiceImplTest {
 	@Autowired
-	private UsersServiceImpl service;
+	private UsersService service;
 	@Autowired
 	private UsersRepository repository;
 	@Autowired
